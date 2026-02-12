@@ -6,17 +6,17 @@ Template d'API REST prête à l'emploi basée sur **Express 5**, **TypeScript**,
 
 ## Stack technique
 
-| Technologie | Rôle |
-|-------------|------|
-| **Express 5** | Framework HTTP |
-| **TypeScript** | Typage statique + path aliases (`@/*`) |
-| **Zod** | Validation des données (body, query, params, env) |
-| **MySQL2** | Base de données (pool de connexions) |
-| **JWT + bcrypt** | Authentification (Bearer header + cookie) |
-| **Helmet** | Sécurisation des headers HTTP |
-| **Morgan** | Logging des requêtes HTTP (`dev` / `combined`) |
-| **CORS** | Cross-Origin Resource Sharing |
-| **TypeDoc** | Génération de documentation depuis les JSDoc |
+| Technologie      | Rôle                                              |
+| ---------------- | ------------------------------------------------- |
+| **Express 5**    | Framework HTTP                                    |
+| **TypeScript**   | Typage statique + path aliases (`@/*`)            |
+| **Zod**          | Validation des données (body, query, params, env) |
+| **MySQL2**       | Base de données (pool de connexions)              |
+| **JWT + bcrypt** | Authentification (Bearer header + cookie)         |
+| **Helmet**       | Sécurisation des headers HTTP                     |
+| **Morgan**       | Logging des requêtes HTTP (`dev` / `combined`)    |
+| **CORS**         | Cross-Origin Resource Sharing                     |
+| **TypeDoc**      | Génération de documentation depuis les JSDoc      |
 
 ---
 
@@ -113,14 +113,14 @@ Pour ajouter une ressource (ex: `users`), créer les fichiers suivants en s'insp
 
 ### Gestion des erreurs
 
-| Source | HTTP | Gestion |
-|--------|------|---------|
-| `throw new HttpError(404, 'msg')` | 404 (ou tout code) | `errorMiddleware` → JSON |
-| `ZodError` (validation) | 400 | `errorMiddleware` → JSON + détails |
-| `JsonWebTokenError` | 401 | `errorMiddleware` → JSON |
-| `TokenExpiredError` | 401 | `errorMiddleware` → JSON |
-| Erreur non gérée | 500 | `errorMiddleware` → JSON (message masqué en prod) |
-| Route inconnue | 404 | Handler 404 dans `server.ts` |
+| Source                            | HTTP               | Gestion                                           |
+| --------------------------------- | ------------------ | ------------------------------------------------- |
+| `throw new HttpError(404, 'msg')` | 404 (ou tout code) | `errorMiddleware` → JSON                          |
+| `ZodError` (validation)           | 400                | `errorMiddleware` → JSON + détails                |
+| `JsonWebTokenError`               | 401                | `errorMiddleware` → JSON                          |
+| `TokenExpiredError`               | 401                | `errorMiddleware` → JSON                          |
+| Erreur non gérée                  | 500                | `errorMiddleware` → JSON (message masqué en prod) |
+| Route inconnue                    | 404                | Handler 404 dans `server.ts`                      |
 
 ### Format des réponses API
 
@@ -137,13 +137,13 @@ Pour ajouter une ressource (ex: `users`), créer les fichiers suivants en s'insp
 Utiliser les middlewares de validation dans les routes :
 
 ```typescript
-router.post('/', validateBody(CreateSchema), createHandler);
-router.get('/', validateQuery(ListQuerySchema), listHandler);
-router.delete('/:id', validateParams(IdParamSchema), deleteHandler);
+router.post("/", validateBody(CreateSchema), createHandler);
+router.get("/", validateQuery(ListQuerySchema), listHandler);
+router.delete("/:id", validateParams(IdParamSchema), deleteHandler);
 ```
 
 > **Note** : Express 5 propage automatiquement les rejets de Promise des handlers async
-> vers le middleware d'erreur. Aucun wrapper `asyncHandler` n'est nécessaire.
+> vers le middleware d'erreur.
 
 Les schémas partagés (`IdParamSchema`, `SortDirectionEnum`) sont dans `schemas/commonSchema.ts`.
 
@@ -160,22 +160,22 @@ Query params : `?page=1&limit=20&sortBy=created_at&sortDirection=desc`
 
 ## Variables d'environnement
 
-| Variable | Requis | Défaut | Description |
-|----------|:------:|--------|-------------|
-| `NODE_ENV` | Non | `development` | `development` / `production` / `test` |
-| `PORT` | Non | `3000` | Port du serveur HTTP |
-| `DB_HOST` | Oui | — | Hôte MySQL |
-| `DB_PORT` | Non | `3306` | Port MySQL |
-| `DB_USER` | Oui | — | Utilisateur MySQL |
-| `DB_PASSWORD` | Oui | — | Mot de passe MySQL |
-| `DB_NAME` | Oui | — | Nom de la base de données |
-| `DB_POOL_SIZE` | Non | `10` | Connexions max dans le pool |
-| `JWT_SECRET` | Oui | — | Clé secrète pour signer les JWT |
-| `PASSWORD_HASH` | Oui | — | Hash bcrypt du mot de passe admin |
-| `JWT_EXPIRY` | Non | `86400` | Durée de vie des JWT (secondes) |
-| `CORS_ORIGIN` | Non | `*` (toutes) | Origine(s) CORS autorisée(s), séparées par des virgules |
-| `DEFAULT_PAGE_LIMIT` | Non | `10` | Pagination par défaut |
-| `MAX_PAGE_LIMIT` | Non | `100` | Pagination maximale |
+| Variable             | Requis | Défaut        | Description                                             |
+| -------------------- | :----: | ------------- | ------------------------------------------------------- |
+| `NODE_ENV`           |  Non   | `development` | `development` / `production` / `test`                   |
+| `PORT`               |  Non   | `3000`        | Port du serveur HTTP                                    |
+| `DB_HOST`            |  Oui   | —             | Hôte MySQL                                              |
+| `DB_PORT`            |  Non   | `3306`        | Port MySQL                                              |
+| `DB_USER`            |  Oui   | —             | Utilisateur MySQL                                       |
+| `DB_PASSWORD`        |  Oui   | —             | Mot de passe MySQL                                      |
+| `DB_NAME`            |  Oui   | —             | Nom de la base de données                               |
+| `DB_POOL_SIZE`       |  Non   | `10`          | Connexions max dans le pool                             |
+| `JWT_SECRET`         |  Oui   | —             | Clé secrète pour signer les JWT                         |
+| `PASSWORD_HASH`      |  Oui   | —             | Hash bcrypt du mot de passe admin                       |
+| `JWT_EXPIRY`         |  Non   | `86400`       | Durée de vie des JWT (secondes)                         |
+| `CORS_ORIGIN`        |  Non   | `*` (toutes)  | Origine(s) CORS autorisée(s), séparées par des virgules |
+| `DEFAULT_PAGE_LIMIT` |  Non   | `10`          | Pagination par défaut                                   |
+| `MAX_PAGE_LIMIT`     |  Non   | `100`         | Pagination maximale                                     |
 
 Toutes les variables sont validées au démarrage via Zod. Si une variable requise manque, le serveur refuse de démarrer avec un message explicite.
 
@@ -200,31 +200,32 @@ Toutes les variables sont validées au démarrage via Zod. Si une variable requi
 
 ### Authentification (publique)
 
-| Méthode | Route | Description |
-|---------|-------|-------------|
-| `POST` | `/api/auth/login` | Connexion (retourne un JWT) |
+| Méthode | Route             | Description                 |
+| ------- | ----------------- | --------------------------- |
+| `POST`  | `/api/auth/login` | Connexion (retourne un JWT) |
 
 ### Items (authentifié)
 
-| Méthode | Route | Description |
-|---------|-------|-------------|
-| `GET` | `/api/items` | Lister (paginé, triable) |
-| `GET` | `/api/items/:id` | Détail |
-| `POST` | `/api/items` | Créer |
-| `PATCH` | `/api/items/:id` | Modifier (partiel) |
+| Méthode  | Route            | Description                |
+| -------- | ---------------- | -------------------------- |
+| `GET`    | `/api/items`     | Lister (paginé, triable)   |
+| `GET`    | `/api/items/:id` | Détail                     |
+| `POST`   | `/api/items`     | Créer                      |
+| `PATCH`  | `/api/items/:id` | Modifier (partiel)         |
 | `DELETE` | `/api/items/:id` | Supprimer (204 No Content) |
 
 ### Supervision
 
-| Méthode | Route | Description |
-|---------|-------|-------------|
-| `GET` | `/health` | Health check (vérifie la connectivité MySQL) |
+| Méthode | Route     | Description                                  |
+| ------- | --------- | -------------------------------------------- |
+| `GET`   | `/health` | Health check (vérifie la connectivité MySQL) |
 
 ---
 
 ## Documentation JSDoc
 
 Tous les fichiers sources sont documentés avec des JSDoc standards incluant :
+
 - `@module` + `@description` sur chaque fichier
 - `@param`, `@returns`, `@throws` sur chaque fonction/méthode exportée
 - `@example` avec des exemples d'utilisation concrets
@@ -242,7 +243,7 @@ La documentation HTML est générée dans le dossier `docs/` via **TypeDoc** (co
 
 Lors de l'ajout d'une nouvelle ressource, respecter ce pattern :
 
-```typescript
+````typescript
 /**
  * @module services/monService
  * @description Logique métier pour la ressource "mon-resource".
@@ -264,4 +265,4 @@ Lors de l'ajout d'une nouvelle ressource, respecter ce pattern :
  * @throws {HttpError} 404 si la ressource n'existe pas
  */
 export async function get(id: number) { ... }
-```
+````
