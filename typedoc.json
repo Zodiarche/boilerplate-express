@@ -1,0 +1,41 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["src/**/*.ts"],
+  "out": "docs",
+  "name": "API Template - Documentation",
+  "readme": "TEMPLATE.md",
+  "tsconfig": "tsconfig.json",
+  "excludePrivate": true,
+  "excludeInternal": true,
+  "includeVersion": true,
+  "categorizeByGroup": true,
+  "navigation": {
+    "includeCategories": true,
+    "includeGroups": true
+  },
+  "sort": ["source-order"],
+  "blockTags": [
+    "@param",
+    "@returns",
+    "@throws",
+    "@example",
+    "@module",
+    "@description",
+    "@typeParam",
+    "@default",
+    "@see",
+    "@since",
+    "@deprecated"
+  ],
+  "suppressCommentWarningsInDeclarationFiles": true,
+  "externalSymbolLinkMappings": {
+    "@types/node": {
+      "\"http\".Server": "https://nodejs.org/api/http.html#class-httpserver",
+      "\"http\".ClientRequest": "https://nodejs.org/api/http.html#class-httpclientrequest",
+      "\"http\".request": "https://nodejs.org/api/http.html#httprequesturl-options-callback",
+      "\"http\".createServer": "https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener",
+      "EventEmitter.defaultMaxListeners": "https://nodejs.org/api/events.html#eventsdefaultmaxlisteners"
+    }
+  },
+  "highlightLanguages": ["typescript", "json", "bash", "sql", "http", "console"]
+}
